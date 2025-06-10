@@ -33,13 +33,15 @@ import { AuthAdminLayoutComponent } from './layouts/auth-admin-layout/auth-admin
 import { AllPotsComponent } from './Components/all-pots/all-pots.component';
 import { EditPostComponent } from './Components/edit-post/edit-post.component';
 
+// ... all your imports stay the same
+
 export const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
     children: [
       { path: '', redirectTo: 'landingPage', pathMatch: 'full' },
-      {path:'landingPage',component:LandingPageComponent,title:"Landing Page"},
+      { path: 'landingPage', component: LandingPageComponent, title: "Landing Page" },
       { path: 'login', component: LoginComponent, title: 'Login' },
       { path: 'signup', component: SignupComponent, title: 'SignUp' },
       {
@@ -67,7 +69,7 @@ export const routes: Routes = [
     ],
   },
   {
-    canActivate:[authGuard], //this is guard use when abdelrahman make apis
+    canActivate: [authGuard],
     path: 'jobseeker',
     component: JobSeekerLayout,
     children: [
@@ -82,6 +84,7 @@ export const routes: Routes = [
         path: 'jobApplication/:id',
         component: JobApplicationComponent,
         title: 'Job Application',
+        data: { renderMode: 'server' } // ✅ added to avoid prerender error
       },
       {
         path: 'jobSeekerDashboard',
@@ -94,25 +97,29 @@ export const routes: Routes = [
     ],
   },
   {
-    canActivate:[authGuard],
-    path:'employer',
-    component:EmployerlayoutComponent,
-    children:[
-      {path:'',redirectTo:'home',pathMatch:'full'},
-      {path:'home',component:HomeEmployerComponent,title:'Home-Employeer'},
-      {path:'dashboard',component:EmployerDashBoardComponent,title:'Dashboard-Employeer'},
-      {path:'details',component:DetailsEmployerComponent,title:'Details-Employeer'},
-      { path: 'post-job', component: PostJobComponent , title:'Post-Job'},
-      { path: 'posts', component: AllPotsComponent , title:'Posts'},
-      { path: 'editpost/:id', component: EditPostComponent , title:'Edit'},
+    canActivate: [authGuard],
+    path: 'employer',
+    component: EmployerlayoutComponent,
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeEmployerComponent, title: 'Home-Employeer' },
+      { path: 'dashboard', component: EmployerDashBoardComponent, title: 'Dashboard-Employeer' },
+      { path: 'details', component: DetailsEmployerComponent, title: 'Details-Employeer' },
+      { path: 'post-job', component: PostJobComponent, title: 'Post-Job' },
+      { path: 'posts', component: AllPotsComponent, title: 'Posts' },
+      {
+        path: 'editpost/:id',
+        component: EditPostComponent,
+        title: 'Edit',
+        data: { renderMode: 'server' } // ✅ added to avoid prerender error
+      },
     ]
   },
-
-    {
+  {
     path: 'authAdmin',
     component: AuthAdminLayoutComponent,
     children: [
-      { path: '', redirectTo: 'login', pathMatch:'full'},
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       {
         path: 'login',
         component: AdminLoginComponent,
@@ -122,20 +129,21 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    component:AdminLayoutComponent,
+    component: AdminLayoutComponent,
     children: [
-      {path:'',redirectTo:'home',pathMatch:'full'},
-      { path: 'home', 
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'home',
         component: HomeAdminComponent,
-        title:'Admin Home',
-       },
-      { path: 'details/:type', 
+        title: 'Admin Home',
+      },
+      {
+        path: 'details/:type',
         component: DetailsAdminComponent,
-        title: 'details'
-       },
+        title: 'details',
+        data: { renderMode: 'server' } // ✅ added to avoid prerender error
+      },
     ]
   },
-  
   { path: '**', component: NotfoundComponent }
-
 ];

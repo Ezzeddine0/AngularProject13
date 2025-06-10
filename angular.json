@@ -1,4 +1,6 @@
 {
+  "@netlify/angular-runtime": "^2.4.0",
+  "@angular/ssr": "..." ,// your Angular SSR version
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
